@@ -1,0 +1,6 @@
+{
+  "name": "IPTV Pro",
+  "description": "A highly polished, modern IPTV livestream player with custom playlists, Persian preset channels, favorites, and smart user-agent proxy controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
