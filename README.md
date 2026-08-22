@@ -1,21 +1,36 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# IPTV Pro 📺
 
-# Run and deploy your AI Studio app
+اپلیکیشن اندرویدی پخش آی‌پی‌تی‌وی (IPTV) با رابط کاربری مدرن — ساخته‌شده با Jetpack Compose و Kotlin.
 
-This contains everything you need to run your app locally.
+## ✨ امکانات
 
-View your app in AI Studio: https://ai.studio/apps/211a2bf7-9c92-4ab9-8f98-2fe8417689b7
+- مدیریت لیست کانال‌ها با دیتابیس محلی (`IptvDatabase` + `IptvRepository`)
+- پخش زنده کانال‌ها از طریق `VideoPlayerView`
+- معماری MVVM با ViewModel و Compose
+- تم و تایپوگرافی سفارشی (Material 3)
 
-## Run Locally
+## 🧱 ساختار پروژه
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+```
+app/src/main/java/com/example/
+├── MainActivity.kt
+├── data/
+│   ├── IptvDatabase.kt
+│   └── IptvRepository.kt
+└── ui/
+    ├── IptvApp.kt
+    ├── IptvViewModel.kt
+    ├── components/VideoPlayerView.kt
+    └── theme/…
+```
 
+## 🛠 بیلد
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+پیش‌نیاز: [Android Studio](https://developer.android.com/studio)
+
+1. پروژه را در Android Studio باز کن (**Open** ← انتخاب پوشه پروژه).
+2. اجازه بده Android Studio ناسازگاری‌های import را خودکار اصلاح کند.
+3. در صورت نیاز یک فایل `.env` در ریشه پروژه بساز و `GEMINI_API_KEY` را داخلش قرار بده.
+4. روی **Run** بزن ▶️
+
+این پروژه از [AI Studio](https://ai.studio/apps/211a2bf7-9c92-4ab9-8f98-2fe8417689b7) قابل دسترس نیز هست.
