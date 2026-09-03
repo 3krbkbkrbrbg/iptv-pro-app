@@ -2,6 +2,7 @@ package com.example.ui
 
 import android.content.Context
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
@@ -63,6 +64,13 @@ fun IptvApp(viewModel: IptvViewModel) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
+    // Handle Hardware / System Back gesture when player is open
+    if (activeChannel != null) {
+        BackHandler {
+            viewModel.clearActiveChannel()
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = DarkBg,
@@ -90,12 +98,27 @@ fun IptvApp(viewModel: IptvViewModel) {
                 if (activeChannel != null) {
                     val active = activeChannel!!
                     if (isLandscape) {
-                        // Landscape view is purely the player
-                        VideoPlayerView(
-                            streamUrl = active.streamUrl,
-                            useCustomUserAgent = useCustomUserAgent,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        // Landscape view: Player with floating Back button
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            VideoPlayerView(
+                                streamUrl = active.streamUrl,
+                                useCustomUserAgent = useCustomUserAgent,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            IconButton(
+                                onClick = { viewModel.clearActiveChannel() },
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.TopStart)
+                                    .background(Color.Black.copy(alpha = 0.6f), CircleShape)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.ArrowBack,
+                                    contentDescription = "بازگشت",
+                                    tint = Color.White
+                                )
+                            }
+                        }
                     } else {
                         // Portrait View displays player, info, and remaining channels below
                         val isFav by viewModel.isFavorite(active.streamUrl).collectAsStateWithLifecycle(initialValue = false)
@@ -116,7 +139,7 @@ fun IptvApp(viewModel: IptvViewModel) {
                                 onFavToggle = { viewModel.toggleFavorite(active) },
                                 useCustomUserAgent = useCustomUserAgent,
                                 onToggleUserAgent = { viewModel.toggleUserAgent() },
-                                onClosePlayer = { viewModel.selectChannel(activeChannel!!) /* Toggle/Hide could be here, but let's allow just closing active stream by making it null */ }
+                                onClosePlayer = { viewModel.clearActiveChannel() }
                             )
 
                             Divider(color = SurfaceAccent, thickness = 1.dp)
@@ -256,6 +279,26 @@ fun WatchDetailsSection(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Close / Back Button
+            Button(
+                onClick = onClosePlayer,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = SurfaceAccent,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(20.dp),
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
+                modifier = Modifier.padding(end = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "بازگشت",
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "بازگشت به خانه", fontSize = 12.sp)
+            }
+
             // Favorite Button
             Button(
                 onClick = onFavToggle,
@@ -264,7 +307,7 @@ fun WatchDetailsSection(
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(20.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(
@@ -273,7 +316,7 @@ fun WatchDetailsSection(
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
-                Text(text = if (isFav) "نشان شده" else "افزودن به نشان‌ها", fontSize = 12.sp)
+                Text(text = if (isFav) "نشان شده" else "نشان کردن", fontSize = 12.sp)
             }
 
             // User-Agent toggle button (Smart Proxy)
@@ -284,7 +327,7 @@ fun WatchDetailsSection(
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(20.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(
@@ -294,7 +337,7 @@ fun WatchDetailsSection(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = if (useCustomUserAgent) "پروکسی هوشمند: روشن" else "پروکسی: خاموش",
+                    text = if (useCustomUserAgent) "پروکسی: روشن" else "پروکسی",
                     fontSize = 12.sp
                 )
             }

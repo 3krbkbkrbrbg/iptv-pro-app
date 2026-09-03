@@ -99,6 +99,10 @@ class IptvViewModel(private val repository: IptvRepository) : ViewModel() {
         }
     }
 
+    fun clearActiveChannel() {
+        _activeChannel.value = null
+    }
+
     fun selectChannelFromFavorite(fav: FavoriteEntity) {
         val channel = Channel(
             name = fav.name,
