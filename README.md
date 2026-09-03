@@ -35,6 +35,9 @@ app/src/main/java/com/example/
 
 این پروژه از [AI Studio](https://ai.studio/apps/211a2bf7-9c92-4ab9-8f98-2fe8417689b7) قابل دسترس نیز هست.
 
+## 👤 توسعه‌دهنده (Credits)
+نسخه توسعه‌یافته وب‌اپ و اپلیکیشن‌های تمام پلتفرم‌ها ساخته دست **Hellboy Coder** ⚡
+
 ---
 **Crafted with passion by Hellboy Coder ⚡**
 
