@@ -214,13 +214,20 @@ fun AppBar(onClosePlayer: () -> Unit) {
                 )
             }
             Spacer(modifier = Modifier.width(10.dp))
-            Text(
-                text = "IPTV Pro",
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.5.sp
-            )
+            Column {
+                Text(
+                    text = "IPTV Pro",
+                    color = Color.White,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
+                )
+                Text(
+                    text = "Crafted with passion by Hellboy Coder ⚡",
+                    color = SecondaryText,
+                    fontSize = 10.sp
+                )
+            }
         }
 
         IconButton(onClick = onClosePlayer) {

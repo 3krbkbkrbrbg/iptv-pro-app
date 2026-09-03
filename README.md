@@ -34,3 +34,7 @@ app/src/main/java/com/example/
 4. روی **Run** بزن ▶️
 
 این پروژه از [AI Studio](https://ai.studio/apps/211a2bf7-9c92-4ab9-8f98-2fe8417689b7) قابل دسترس نیز هست.
+
+---
+**Crafted with passion by Hellboy Coder ⚡**
+
